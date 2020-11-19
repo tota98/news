@@ -19,7 +19,7 @@ import cl.ucn.disc.dsm.gcornejo.news.model.News;
  * @author Gonzalo Cornejo Araya.
  */
 
-public class ContractsImpl implements Contracts {
+public abstract class ContractsImpl implements Contracts {
 
     /**
      * Get the list News.
