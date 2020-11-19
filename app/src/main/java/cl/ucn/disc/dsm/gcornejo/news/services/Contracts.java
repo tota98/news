@@ -31,9 +31,16 @@ import cl.ucn.disc.dsm.gcornejo.news.model.News;
 public interface Contracts {
 
     /**
-     * Get the list Nwes.
+     * Get the list News.
      * @param size size of the list.
      * @return the List of News.
      */
     List<News> retrieveNews(Integer size);
+
+    /**
+     * Save one News into the System.
+     * @param news news of the list.
+     */
+    void saveNews(News news);
+
 }
