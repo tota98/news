@@ -42,5 +42,4 @@ public interface Contracts {
      * @param news news of the list.
      */
     void saveNews(News news);
-
 }
