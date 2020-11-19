@@ -42,13 +42,13 @@ public class TestContractsImpl {
         log.debug("Testing ..");
 
         // The implementation
-        Contracts contracts = new ContractsImpl();
+        Contracts contracts = new ContractsImplFaker();
 
         // Call the method
         List<News> news = contracts.retrieveNews(5);
         Assertions.assertNotNull(news, "List was null :c");
         Assertions.assertTrue(news.size() != 0, "Empty list? :c");
-        Assertions.assertTrue(news.size() == 5 , "List size distinto de 5 :c");
+        Assertions.assertTrue(news.size() == 5 , "List size is not 5 :c");
 
         log.debug("Done.");
     }
