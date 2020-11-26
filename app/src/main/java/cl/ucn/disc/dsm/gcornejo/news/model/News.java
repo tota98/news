@@ -10,7 +10,11 @@
 
 package cl.ucn.disc.dsm.gcornejo.news.model;
 
+import net.openhft.hashing.LongHashFunction;
+
 import org.threeten.bp.ZonedDateTime;
+
+import cl.ucn.disc.dsm.gcornejo.news.utils.Validation;
 
 /**
  * The Domain model: News.
@@ -67,26 +71,41 @@ public final class News {
 
     /**
      * The Constructor.
-     * @param id
-     * @param title
-     * @param source
-     * @param author
-     * @param url
-     * @param urlImage
-     * @param description
-     * @param content
-     * @param publishedAt
+     *
+     * @param title         can't be null.
+     * @param source        can't be null.
+     * @param author        can't be null.
+     * @param url           to the main article.
+     * @param urlImage      to the image.
+     * @param description   ~full article.
+     * @param content       can't be null.
+     * @param publishedAt   can't be null.
      */
-    public News(Long id, String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
-        // TODO: Add the validations
-        this.id = id;
+    public News(String title, String source, String author, String url, String urlImage, String description, String content, ZonedDateTime publishedAt) {
+
+        Validation.minSize(title, 2, "title");
         this.title = title;
+
+        Validation.minSize(source, 2, "source");
         this.source = source;
+
+        Validation.minSize(author, 3, "author");
         this.author = author;
+
+        // Hashing unique! https://github.com/Cyan4973/xxHash
+        this.id = LongHashFunction.xx().hashChars(title + "|" + source + "|" + author);
+
+        // Can't be null
         this.url = url;
         this.urlImage = urlImage;
+
+        Validation.minSize(description, 10, "description");
         this.description = description;
+
+        Validation.notNull(content, "content");
         this.content = content;
+
+        Validation.notNull(publishedAt, "publishedAt");
         this.publishedAt = publishedAt;
     }
 
