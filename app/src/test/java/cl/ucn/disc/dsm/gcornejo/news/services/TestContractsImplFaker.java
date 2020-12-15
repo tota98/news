@@ -54,7 +54,8 @@ public final class TestContractsImplFaker {
 
         // debug to log
         for (News n : news){
-            log.debug("News: {}", n);
+            //TODO: Fix this
+            // log.debug("News: {}", toStringBuilder.reflectionToString(n, ToStringStyle.MULTI_LINE_STYLE));
         }
 
         // size = 0
@@ -72,6 +73,9 @@ public final class TestContractsImplFaker {
         log.debug("Done.");
     }
 
+    /**
+     * The Test of Save News.
+     */
     @Test
     public void testSaveNews(){
 
@@ -88,7 +92,6 @@ public final class TestContractsImplFaker {
 
         // Create random New*
         News theNewsFake = new News(
-                Integer.toUnsignedLong(news.size()),
                 faker.book().title(),
                 faker.name().username(),
                 faker.name().fullName(),
