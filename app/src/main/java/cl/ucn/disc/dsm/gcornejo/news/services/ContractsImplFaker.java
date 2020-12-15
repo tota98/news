@@ -27,9 +27,11 @@ import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cl.ucn.disc.dsm.gcornejo.news.model.News;
+import cl.ucn.disc.dsm.gcornejo.news.utils.Validation;
 
 /**
  * The Faker implementation of {@link Contracts}.
@@ -59,7 +61,6 @@ public final class ContractsImplFaker implements Contracts{
 
         for (int i = 0; i <5; i++){
             this.theNews.add(new News(
-                    Integer.toUnsignedLong(i),
                     faker.book().title(),
                     faker.name().username(),
                     faker.name().fullName(),
@@ -80,18 +81,37 @@ public final class ContractsImplFaker implements Contracts{
      */
     @Override
     public List<News> retrieveNews(final Integer size){
+
+        // Return all the data
+        if (size > theNews.size()){
+            return Collections.unmodifiableList(this.theNews);
+        }
+
         // The last "size" elements.
-        return theNews.subList(theNews.size() - size, theNews.size());
+        return Collections.unmodifiableList(
+                theNews.subList(theNews.size() - size, theNews.size())
+        );
     }
 
     /**
-     * Save one News into the System.
+     * Save one News into the System. Don't allow repeated.
      *
      * @param news to save.
      */
     @Override
     public void saveNews(final News news){
-        // FIXME: Don't allow duplicated!!
+
+        // Nullity
+        Validation.notNull(news, "news");
+
+        // Check duplicates
+        for (News n : this.theNews){
+            if (n.getId().equals(news.getId())){
+                throw new IllegalArgumentException("Can't allow duplicate news!");
+            }
+        }
+
+        // Add news
         this.theNews.add(news);
     }
 }
